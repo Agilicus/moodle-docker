@@ -1,0 +1,19 @@
+version: "2"
+services:
+  webserver:
+    environment:
+      MOODLE_DOCKER_DBTYPE: cockroachdb
+      MOODLE_DOCKER_DBNAME: defaultdb
+      MOODLE_DOCKER_DBUSER: root
+  db:
+    image: cockroachdb/cockroach:v20.1.0
+    ports:
+    - 8080:8080
+    volumes:
+    - ./cockroach-data:/cockroach/cockroach-data
+    command:
+    - start-single-node
+    - --insecure
+    environment:
+      COCKROACH_USERNAME: moodle
+      COCKROACH_DATABASE: moodle
